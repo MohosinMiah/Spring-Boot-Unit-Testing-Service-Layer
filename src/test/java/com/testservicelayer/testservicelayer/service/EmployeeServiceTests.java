@@ -3,6 +3,8 @@ package com.testservicelayer.testservicelayer.service;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,6 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.testservicelayer.testservicelayer.entity.Employee;
+import com.testservicelayer.testservicelayer.exception.DataDuplicationException;
 import com.testservicelayer.testservicelayer.repository.EmployeeRepository;
 import com.testservicelayer.testservicelayer.service.Impl.EmployeeServiceImpl;
 
@@ -47,13 +50,6 @@ public class EmployeeServiceTests {
     public void givenEmployeeObject_whenSaveEmployee_thenReturnEmployeeObject() {
 
         //   Given : Setup object or precondition
-        employee = Employee.builder()
-                .id(1L)
-                .firstName("MOHOSIN")
-                .lastName("MIAH")
-                .email("mohosinmiah1610@gmail.com")
-                .departmentCode("CSE")
-                .build();
 
         BDDMockito.given(employeeRepository.findByEmail(employee.getEmail())).willReturn(Optional.empty());
 
@@ -66,6 +62,23 @@ public class EmployeeServiceTests {
         assertThat(saveEmployee).isNotNull();
     }
 
+    // JQunit test for save employee method which throws exception
+    @Test
+    @DisplayName("JQunit test for save employee method which throws exception")
+    public void givenExistingEmail_whenSaveEmployee_thenThrowsException() {
+
+        //   Given : Setup object or precondition
+
+        BDDMockito.given(employeeRepository.findByEmail(employee.getEmail())).willReturn(Optional.of(employee));
+
+        // BDDMockito.given(employeeRepository.save(employee)).willReturn(employee); As I will get error so there is no logical meaning to save
+
+        // When: Action or behavior that we are going to test
+        Assertions.assertThrows(DataDuplicationException.class, () -> {
+            employeeService.saveEmployee(employee);
+        });
+        
+    }
 
 
 }
