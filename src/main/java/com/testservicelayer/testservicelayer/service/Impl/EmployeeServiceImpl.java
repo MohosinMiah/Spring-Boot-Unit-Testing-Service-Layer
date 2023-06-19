@@ -1,5 +1,6 @@
 package com.testservicelayer.testservicelayer.service.Impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,12 @@ public class EmployeeServiceImpl implements EmployeeService{
         }
         // Save employee 
         return employeeRepository.save(employee);
+    }
+
+    @Override
+    public List<Employee> getEmployeeList() {
+        // Get employee list
+        return employeeRepository.findAll();
     }
     
 }
