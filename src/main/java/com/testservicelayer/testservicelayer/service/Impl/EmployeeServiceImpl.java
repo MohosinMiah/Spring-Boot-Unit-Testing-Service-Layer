@@ -13,9 +13,11 @@ import com.testservicelayer.testservicelayer.service.EmployeeService;
 @Service
 public class EmployeeServiceImpl implements EmployeeService{
 
-    @Autowired
     private EmployeeRepository employeeRepository;
 
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
 
     // Save Employee
     @Override
