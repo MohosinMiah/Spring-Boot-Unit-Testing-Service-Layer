@@ -1,11 +1,13 @@
 package com.testservicelayer.testservicelayer.service;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.hibernate.sql.ast.tree.expression.Collation;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -118,6 +120,31 @@ public class EmployeeServiceTests {
             assertThat(employees).containsExactly(employeeOne, employeeTwo);
     }
 
+    // JQunit test for get all employee operations
+    @Test
+    @DisplayName("JQunit test for getEmployeeList operations")
+    public void givenEmptyEmployeeObject_whenGetAllEmployee_thenReturnAllEmptyEmployee() {
+
+       // Given: Setup objects or preconditions
+        Employee employeeOne = Employee.builder()
+            .id(1L)
+            .firstName("MOHOSIN")
+            .lastName("MIAH")
+            .email("mohosinmiah1610@gmail.com")
+            .departmentCode("CSE")
+            .build();
+
+
+            // Mock the behavior of the employeeRepository
+            Mockito.when(employeeRepository.findAll()).thenReturn(Collections.emptyList());
+
+            // When: Perform the action or behavior being tested
+            List<Employee> employees = employeeService.getEmployeeList();
+
+            // Then: Verify the output or expected result
+            assertThat(employees).isNotNull();
+            assertThat(employees).hasSize(0);
+    }
 
 
 }
