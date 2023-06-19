@@ -25,11 +25,20 @@ public class EmployeeServiceTests {
     @InjectMocks
     private EmployeeServiceImpl employeeService;
 
+    private Employee employee;
+
     @BeforeEach
     public void setUp()
     {
         // employeeRepository = Mockito.mock(EmployeeRepository.class);
         // employeeService    = new EmployeeServiceImpl(employeeRepository);
+        employee =  Employee.builder()
+                .id(1L)
+                .firstName("MOHOSIN")
+                .lastName("MIAH")
+                .email("mohosinmiah1610@gmail.com")
+                .departmentCode("CSE")
+                .build();
     }
 
     // JQunit test for save employee opertaions
@@ -38,7 +47,7 @@ public class EmployeeServiceTests {
     public void givenEmployeeObject_whenSaveEmployee_thenReturnEmployeeObject() {
 
         //   Given : Setup object or precondition
-        Employee employee = Employee.builder()
+        employee = Employee.builder()
                 .id(1L)
                 .firstName("MOHOSIN")
                 .lastName("MIAH")
