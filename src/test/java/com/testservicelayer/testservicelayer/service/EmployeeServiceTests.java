@@ -167,4 +167,29 @@ public class EmployeeServiceTests {
 
     }
 
+    // JQunit test for update employee by ID operations
+    @Test
+    @DisplayName("JQunit test for update employee by ID operations")
+    public void givenEmployeeObject_whenUpdate_thenReturnUpdatedEmployeeObject() {
+    // Given: Setup objects or preconditions
+        Long employeeId = 123L;
+        Employee employee = new Employee();
+        employee.setId(employeeId);
+
+        // Mock the behavior of the employeeRepository
+        Employee existingEmployee = new Employee();
+        existingEmployee.setId(employeeId);
+        Mockito.when(employeeRepository.findById(employeeId)).thenReturn(Optional.of(existingEmployee));
+        Mockito.when(employeeRepository.save(existingEmployee)).thenReturn(existingEmployee);
+
+        // When: Perform the action or behavior being tested
+        Employee updatedEmployee = employeeService.updateEmployee(employeeId, employee);
+
+        // Then: Verify the output or expected result
+        assertThat(updatedEmployee).isNotNull();
+        assertThat(updatedEmployee.getId()).isEqualTo(employeeId);
+
+    }
+
+
 }
