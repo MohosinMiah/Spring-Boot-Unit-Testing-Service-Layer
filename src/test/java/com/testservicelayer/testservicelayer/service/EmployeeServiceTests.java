@@ -147,4 +147,24 @@ public class EmployeeServiceTests {
     }
 
 
+    // JQunit test for get employee find by ID operations
+    @Test
+    @DisplayName("JQunit test for get employee find by ID operations")
+    public void givenEmployeeObject_whenFindById_thenReturnEmployeeObject() {
+
+       // Given: Setup objects or preconditions
+        // BDDMockito.given(employeeRepository.findById(employee.getId()).get()).willReturn(employee);
+        Mockito.when(employeeRepository.findById(employee.getId())).thenReturn(Optional.of(employee));
+
+        // Mock the behavior of the employeeRepository
+        Mockito.when(employeeRepository.findById(employee.getId())).thenReturn(Optional.of(employee));
+
+        // When: Perform the action or behavior being tested
+        Employee employeeByID = employeeService.getEmployeeById(employee.getId());
+
+        // Then: Verify the output or expected result
+        assertThat(employeeByID).isNotNull();
+
+    }
+
 }
