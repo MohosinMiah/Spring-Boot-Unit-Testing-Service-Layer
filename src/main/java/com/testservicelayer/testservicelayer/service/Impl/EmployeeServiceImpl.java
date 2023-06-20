@@ -61,5 +61,22 @@ public class EmployeeServiceImpl implements EmployeeService{
         // Updated employee
         return updatedEmployee;
     }
+
+
+    @Override
+   public String deleteEmployeeById(Long Id) {
+        Optional<Employee> getEmployee = employeeRepository.findById(Id);
+
+        if( getEmployee.isPresent() )
+        {
+            employeeRepository.deleteById( Id );
+        }
+        else
+        {
+           throw new DataDuplicationException( "Employee email alrady exists: " + Id );
+        }
+
+        return "Delete Successfully";
+    }
     
 }
